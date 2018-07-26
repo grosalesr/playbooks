@@ -3,6 +3,7 @@
   become: yes
   gather_facts: yes
   roles:
-    - common
+    #- common
+    - plasma
   vars:
       release: "{{ ansible_distribution_version }}"
