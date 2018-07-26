@@ -1,0 +1,33 @@
+--- 
+- name: Installing RPM Fusion repository
+  package: name={{ item }} state=present
+  with_items:
+   - https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ release }}.noarch.rpm
+   - https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ release }}.noarch.rpm
+
+- name: Install Multimedia Packages
+  package: name={{ item }} state=present
+  with_items:
+   - ffmpeg
+     #- gstreamer{,-{ffmpeg,plugins-{good,ugly,bad{,-free}}}, 1-{libav,plugins-{good,ugly}}}
+   - gstreamer
+   - gstreamer-ffmpeg
+   - gstreamer-plugins-good
+   - gstreamer-plugins-ugly
+   - gstreamer-plugins-bad-free
+   - gstreamer1-libav
+   - gstreamer1-plugins-good
+   - gstreamer1-plugins-ugly
+   
+- name: Install System Utilities
+  package: name={{ item }} state=present
+  with_items:
+   - tmux
+   - vim
+   - unar
+   - redshift
+   - overpass-fonts
+   - overpass-mono-fonts
+
+- name: Updating System
+  package: name=* state=latest
