@@ -1,0 +1,19 @@
+--- 
+- name: Installing IDE
+  package: name={{ item }} state=present
+  with_items:
+    - kdevelop
+    - kdevelop-python
+
+
+- name: Enabling Virtualization
+  dnf: 
+    name: '@virtualization'
+    state: present
+
+
+- name: Adding "{{ user }}" to Virtualization Group
+  user:
+      name: "{{ user }}"
+      groups: libvirt
+      append: yes
