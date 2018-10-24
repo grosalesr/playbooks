@@ -21,7 +21,6 @@
 - name: Install System Utilities
   package: name={{ item }} state=present
   with_items:
-    - tlp
     - vim
     - nmap
     - tmux
