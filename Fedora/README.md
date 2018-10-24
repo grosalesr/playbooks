@@ -1,11 +1,12 @@
 # Description
 
-Fedora automated configuration
+My automated configurations for [Fedora](https://getfedora.org/)
 
 # Requirements
 
 * SSH must be enabled
 * sudo access
+* Python (on targets)
 
 # Usage
 
@@ -16,8 +17,7 @@ The playbook doesn't contain any user information for security purposes.
 * `-u`: Remote user
 * `-i`: Custom inventory
 
-Depending on the scenario it can be executed as follows, notice this example uses ansible3 (python 3)
+Depending on the scenario it can be executed as follows
 
 ```
-ansible-playbook-3 -Kki CustomInventory -u SomeUser play.yml
-```
+ansible-playbook -Kki CustomInventory -u SomeUser play.yml
