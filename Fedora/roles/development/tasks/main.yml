@@ -12,6 +12,13 @@
     state: present
 
 
+- name: Starting Virtualization service
+  service:
+      name: libvirtd
+      state: started
+
+
+# If user is logged in, then logout and log in again load the changes to the account
 - name: Adding "{{ user }}" to Virtualization Group
   user:
       name: "{{ user }}"
