@@ -3,10 +3,12 @@
   become: yes
   gather_facts: yes
   roles:
-    - common
-    - plasma
+    #- common
+    #- plasma
     - docker
-    - development
+    #- development
   vars:
-      release: "{{ ansible_distribution_version }}"
       user: testUser
+      release: "{{ ansible_distribution_version }}"
+      OS: "{{ ansible_system }}"
+      arch: "{{ ansible_architecture }}"
