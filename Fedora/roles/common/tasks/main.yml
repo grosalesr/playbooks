@@ -32,6 +32,7 @@
     - keepassx
     - overpass-fonts
     - overpass-mono-fonts
+    - python2-libselinux
 
 
 - name: Setting Up Flathub (Flatpak Repository)
