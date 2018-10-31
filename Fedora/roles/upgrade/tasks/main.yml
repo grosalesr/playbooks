@@ -1,0 +1,24 @@
+---
+# https://fedoramagazine.org/upgrading-fedora-28-fedora-29/
+
+- name: Updating OS to latest packages versions
+  dnf:
+    name: "*"
+    update_cache: yes
+    state: latest
+
+- name: Installing dnf-system-upgrade plugin
+  dnf:
+    name: dnf-plugin-system-upgrade
+    state: present
+
+- name: Downloading Packages for Fedora {{ fedora_new_version }}
+  dnf:
+    enable_plugin: system-upgrade
+    download_only: yes
+    releasever: "{{ fedora_new_version }}"
+
+- name: Reboot and Upgrade
+  dnf:
+    enable_plugin: system-upgrade
+    # how to reboot?
