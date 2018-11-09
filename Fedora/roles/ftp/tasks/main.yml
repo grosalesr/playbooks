@@ -5,7 +5,7 @@
     - vsftpd
     - ftp
 
-- name: Backing up configuration file
+- name: Transferring configuration file
   copy:
     src: vsftpd.conf
     dest: /etc/vsftpd/vsftpd.conf
