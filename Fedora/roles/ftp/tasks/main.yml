@@ -1,0 +1,21 @@
+---
+- name: Installing Required Packages
+  package: name={{ item }} state=present
+  with_items:
+    - vsftpd
+    - ftp
+
+- name: Backing up configuration file
+  copy:
+    src: vsftpd.conf
+    dest: /etc/vsftpd/vsftpd.conf
+    owner: root
+    group: root
+    mode: 0600
+    backup: yes
+
+- name: Enable & Start FTP service
+  service:
+    name: vsftpd
+    enabled: yes
+    state: started
