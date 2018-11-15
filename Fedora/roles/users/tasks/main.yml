@@ -1,0 +1,12 @@
+---
+- name: Creando usuarios para los estudiantes
+  user:
+    create_home: yes
+    name: "{{ item }}"
+    password: '$5$sFAi5TotwGzXXCrH$/RHivI2xEZy1bxDpXdpRWWwpx0U/dIWARmItHzuMog9'
+    state: present
+  with_items:
+    - estudiante1
+    - estudiante2
+    - estudiante3
+
