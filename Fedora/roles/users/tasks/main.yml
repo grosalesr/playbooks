@@ -1,5 +1,5 @@
 ---
-- name: Creando usuarios para los estudiantes
+- name: Creating student users
   user:
     create_home: yes
     name: "{{ item }}"
@@ -9,4 +9,7 @@
     - estudiante1
     - estudiante2
     - estudiante3
+    - estudiante4
+    - estudiante5
+    - estudiante6
 
