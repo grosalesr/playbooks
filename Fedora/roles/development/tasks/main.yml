@@ -4,6 +4,8 @@
   with_items:
     - kdevelop
     - kdevelop-python
+  tags:
+    - programming
 
 
 - name: Enabling Virtualization
