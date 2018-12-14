@@ -1,12 +1,12 @@
 ---
-- hosts: test_vm
+- hosts: "{{ target }}"
   become: yes
   gather_facts: yes
   roles:
-    #- common
-    #- plasma
+    - common
+    - plasma
     - docker
-    #- development
+    - development
   vars:
       user: testUser
       release: "{{ ansible_distribution_version }}"
