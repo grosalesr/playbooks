@@ -1,0 +1,15 @@
+---
+- hosts: "{{ target }}"
+  become: yes
+  gather_facts: yes
+  roles:
+    - moodle
+      #- common
+      #- plasma
+      #- docker
+      #- development
+  vars:
+    user: "{{ remoteUser }}"
+    release: "{{ ansible_distribution_version }}"
+    OS: "{{ ansible_system }}"
+    arch: "{{ ansible_architecture }}"
