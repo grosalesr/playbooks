@@ -1,0 +1,10 @@
+---
+- name: restart apache service
+  service:
+    name: httpd
+    state: restarted
+
+- name: restart mariadb service
+  service:
+    name: mysqld
+    state: restarted

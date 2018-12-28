@@ -1,0 +1,123 @@
+---
+- name: Setting up EPEL repository
+  package: name=epel-release state=latest
+  tags:
+    - epel
+
+- name: Setting up PHP7 repository
+  package:
+    name: "http://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+    state: present
+  tags:
+    - php7
+
+- name: Enable latest PHP
+  command: yum-config-manager --enable remi-php73
+  args:
+    creates: 
+  tags:
+    - php7
+
+- name: Installing dependencies
+  package: name={{ item }} state=latest
+  with_items:
+    - php
+    - httpd
+    - php-gd
+    - php-cli 
+    - php-xml
+    - php-zip
+    - php-soap
+    - php-intl
+    - php-ldap
+    - php-curl
+    - php-mysql
+    - php-pspell
+    - php-xmlrpc
+    - php-common
+    - php-mcrypt 
+    - php-opcache
+    - php-fileinfo  
+    - php-mbstring
+    - mariadb-server
+    - libselinux-python
+    - policycoreutils-python
+
+
+- name: Disabling default apache site
+  command: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf.bak
+  args:
+    creates: /etc/httpd/conf.d/welcome.conf.bak
+  tags:
+    - disableDefaultSite
+
+
+- name: Copy Apache configuration file
+  copy:
+    src: moodle.conf
+    dest: /etc/httpd/conf.d/moodle.conf
+    mode: 0644
+  notify:
+    - restart apache service
+
+
+- name: Obtaining latest moodle
+  uri:
+    url: https://api.github.com/repos/moodle/moodle/tags
+    return_content: true
+  register: json_response
+  tags:
+    - latestRelease
+
+- debug: 
+    msg: "{{ json_response.json[0].tarball_url }}"
+  tags:
+    - latestRelease
+
+- get_url:
+    url: "{{ json_response.json[0].tarball_url }}"
+    dest: /var/www/html/moodle.tar.gz
+  tags:
+    - latestRelease
+
+- name: Creating moodle root folder
+  file:
+    path: /var/www/html/moodle
+    state: directory
+    mode: 0755
+    
+- name: Uncompressing moodle
+  command: tar zxf moodle.tar.gz -C moodle --strip-components=1
+  args:
+    chdir: /var/www/html/
+    creates: /var/www/html/moodle/version.php
+    warn: no # unarchive module is not sufficient for this workflow
+  tags:
+    - uncompress
+
+- name: Setting up apache ownership & permissions
+  file:
+    path: /var/www/html/
+    mode: u=rwX,g=rX,o=rX
+    owner: apache
+    group: apache
+    recurse: yes
+
+- name: Setting up SELinux context
+  sefcontext:
+    target: '/var/www/html(/.*)?'
+    setype:  httpd_sys_rw_content_t
+    state: present
+
+- name: Applying SELinux context
+  command: restorecon -irv /var/www/html/
+
+- name: Enable apache service
+  service:
+    name: httpd
+    enabled: yes
+
+- name: Cleaning up
+  file:
+    path: /var/www/html/moodle.tar.gz
+    state: absent
