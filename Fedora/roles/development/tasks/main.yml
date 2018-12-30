@@ -14,15 +14,41 @@
     state: present
 
 
+# https://cockpit-project.org/
+- name: Adding Cockpit
+  package: name={{ item }} state=present
+  with_items:
+    - cockpit
+    - cockpit-machines
+
+
 - name: Starting Virtualization service
   service:
-      name: libvirtd
-      state: started
+    name: libvirtd
+    state: started
+    enabled: yes
+
+
+- name: Starting Cockpit service
+  service: 
+    name: cockpit.socket
+    state: started
+    enabled: yes
+
+
+- name: Adding Cockpit rule to the firewall
+  firewalld:
+    service: cockpit
+    permanent: yes
+    state: enabled
 
 
 # If user is logged in, then logout and log in again load the changes to the account
-- name: Adding "{{ user }}" to Virtualization Group
+- name: Adding "{{ virtualization_user }}" to Virtualization Group
   user:
-      name: "{{ user }}"
+      name: "{{ virtualization_user }}"
       groups: libvirt
       append: yes
+
+
+
