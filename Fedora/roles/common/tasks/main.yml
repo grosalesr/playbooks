@@ -1,4 +1,17 @@
 --- 
+- name: Identifying GPU
+  shell: "lspci | grep VGA | cut -d: -f3"
+  register: systemGPU
+  tags:
+    - gpu
+
+- debug: var=systemGPU.stdout
+  tags:
+    - gpu
+
+- set_fact: gpu={{ systemGPU }}
+
+
 - name: Setting Up RPM Fusion
   package: name={{ item }} state=present
   with_items:
@@ -18,7 +31,16 @@
     - gstreamer1-libav
     - gstreamer1-plugins-good
     - gstreamer1-plugins-ugly
-   
+
+
+- name: Enabling Hardware Decoding
+  package: name={{ item }} state=present
+  with_items:
+    - libva-utils
+    - libvdpau-va-gl
+    - libva-intel-driver
+  when: "{{ gpu }}" == "Intel"
+
 
 - name: Installing System Utilities
   package: name={{ item }} state=present
