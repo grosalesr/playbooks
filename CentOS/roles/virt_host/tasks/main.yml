@@ -1,0 +1,28 @@
+---
+- name: Installing Packages
+  package: name={{ item }} state=present
+  with_items:
+    - tmux
+    - cockpit
+    - virt-v2v
+    - nfs-utils
+    - bash-completion
+    - cockpit-machines
+    - cockpit-storaged
+    - 'Virtualization Host'
+    - setroubleshoot-server
+
+
+- name: Enable Cockpit
+  service:
+    name: cockpit.socket
+    state: started
+    enabled: yes
+
+
+- name: Adding Cockpit to firewall
+  firewalld:
+    service: cockpit
+    permanent: yes
+    state: enabled
+
