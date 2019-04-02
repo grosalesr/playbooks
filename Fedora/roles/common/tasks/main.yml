@@ -53,8 +53,9 @@
     - redshift
     - keepassx
     - youtube-dl
-    - overpass-fonts
-    - overpass-mono-fonts
+    - google-noto-mono-fonts
+    - google-noto-sans-mono-fonts
+    - google-noto-sans-fonts
     - python2-libselinux
 
 
