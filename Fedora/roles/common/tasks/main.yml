@@ -56,6 +56,7 @@
     - google-noto-mono-fonts
     - google-noto-sans-mono-fonts
     - google-noto-sans-fonts
+    - adobe-source-code-pro-fonts # Source Code Pro font, for Konsole, Kate & KDevelop
     - python2-libselinux
 
 
