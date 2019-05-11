@@ -14,10 +14,10 @@ The workflow proposed is to provide the `remote Ansible user` and that `SSH` and
 
 The flags needed to acomplish this are the following:
 
-* `-k`: Ask SSH user password
 * `-K`: Ask sudo user password
-* `-u`: Remote user
+* `-k`: Ask SSH user password
 * `-i`: Custom inventory
+* `-u`: Remote user
 
 
 Also, `play.yml` has the `target` variable, this allow us to pass targets on runtime instead of having to modify `play.yml`.
@@ -25,7 +25,7 @@ Also, `play.yml` has the `target` variable, this allow us to pass targets on run
 This is achieved using `--extra-vars` flag, in the example below the target is wave0 (servers section in the inventory file
 
 ```
-ansible-playbook -Kki inventory -u root play.yml --extra-vars "target=wave0"
+ansible-playbook -Kki inventory -u root play.yml --extra-vars "target=prod"
 ```
 
 **notice** `-u` flag is only needed when the user on the targets is different from the user that is executing the playbook.
@@ -44,10 +44,10 @@ From the common role, run *only* the task with tag `updateOS`, which will update
 ansible-playbook -Kki inventory -u root play.yml --extra-vars "target=all" --tags "updateOS"
 ```
 
-From the common role, run everything **except** the task with tag `Register`, which will be executed on those servers under the wave1 classification
+From the common role, run everything **except** the task with tag `flathub`, which will be executed for the servers under *qa* category.
 
 ```
-ansible-playbook -Kki inventory -u root play.yml --extra-vars "target=wave1" --skip-tags "flathub"
+ansible-playbook -Kki inventory -u root play.yml --extra-vars "target=qa" --skip-tags "flathub"
 ```
 
 ## Roles
@@ -75,7 +75,7 @@ Below you will find information about current roles and what they do
     * Removes unneeded? packages
     * Install [redshift](https://github.com/jonls/redshift) applet for Plasma desktop
 * upgrade (EXPERIMENTAL)
-    * Upgrade Fedora releases, eg: 27 --> 28, 28 --> 29, etc
+    * Upgrade Fedora releases, eg: 28 --> 29, 29 --> 30, etc
 * ftp
     * An FTP server that works only for local accounts
 
