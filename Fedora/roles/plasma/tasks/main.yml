@@ -17,9 +17,12 @@
     - telepathy-qt5
     - calligra-core
     - kwalletmanager
+  tags:
+    - unneededApps
 
 - name: Installing Applications
   package: name={{ item }} state=present
   with_items:
     - plasma-workspace-wayland
     - plasma-applet-redshift-control
+    - retext
