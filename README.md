@@ -1,6 +1,6 @@
 # Description
 
-My automated configurations for [Fedora](https://getfedora.org/)
+Playbooks for [Fedora](https://getfedora.org/), [CentOS](https://www.centos.org/) and [KDE Neon](https://neon.kde.org/).
 
 **Notice**
 
@@ -54,6 +54,8 @@ ansible-playbook -Kki inventory -u root play.yml --extra-vars "target=qa" --skip
 
 Below you will find information about current roles and what they do
 
+### Fedora
+
 * common
     * Setup RPM Fusion
     * Installs multimedia packages
@@ -79,3 +81,13 @@ Below you will find information about current roles and what they do
 * ftp
     * An FTP server that works only for local accounts
 
+### CentOS
+
+**WIP**
+
+* moodle
+* virtHost
+
+### KDE Neon
+
+Setups the requirements needed to develop for KDE using KDE Neon
